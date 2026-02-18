@@ -1,0 +1,22 @@
+#button1{
+  border: 1px solid black;
+  background-color: lightblue;
+  border-radius: 5px;
+  padding: 3;
+  transition: 0.5s ease;
+
+}
+#button1:hover{
+  scale: 1.1;
+};
+#button2{
+  border: 1px solid black;
+  background-color: lightblue;
+  border-radius: 5px;
+  padding: 3;
+  transition: 0.5s ease;
+
+}
+#button2:hover{
+  scale: 1.1;
+};

@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Product Information</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: linear-gradient(135deg, #141e30, #2b609e);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      color: #fff;
+    }
+
+    table {
+      border-collapse: collapse;
+      width: 80%;
+      max-width: 900px;
+      background-color: rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(10px);
+      border-radius: 15px;
+      overflow: hidden;
+      box-shadow: 0 4px 30px rgba(0, 0, 0, 0.4);
+    }
+
+    caption {
+      caption-side: top;
+      padding: 15px;
+      font-size: 1.8rem;
+      font-weight: bold;
+      background: rgba(255, 255, 255, 0.15);
+      letter-spacing: 1px;
+      text-transform: uppercase;
+    }
+
+    th, td {
+      padding: 15px 20px;
+      text-align: left;
+      border: 3px solid #090e17;
+    }
+
+    th {
+      background-color: rgba(255, 255, 255, 0.2);
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      font-size: 0.95rem;
+    }
+
+    tr:nth-child(even) {
+      background-color: rgba(255, 255, 255, 0.05);
+    }
+
+    tr:hover {
+      background-color: rgba(255, 255, 255, 0.15);
+      transition: 0.3s ease;
+    }
+
+    td {
+      font-size: 0.95rem;
+    }
+  </style>
+</head>
+<body>
+  <div>
+  </div>
+  
+  <table>
+   
+    <caption>Product Information</caption>
+    <tr>
+      <th>Product Name</th>
+      <th>Brand</th>
+      <th>Price</th>
+      <th>Description</th>
+    </tr>
+    <tr>
+      <td>Wireless Headphones</td>
+      <td>Sony</td>
+      <td>₹7,999</td>
+      <td>Noise cancellation, 30hr battery, lightweight design</td>
+    </tr>
+    <tr>
+      <td>Smartwatch Pro</td>
+      <td>Apple</td>
+      <td>₹39,999</td>
+      <td>Retina display, water resistant, fitness tracking</td>
+    </tr>
+    <tr>
+      <td>Gaming Laptop X</td>
+      <td>Asus</td>
+      <td>₹89,999</td>
+      <td>RTX graphics, 16GB RAM, RGB backlit keyboard</td>
+    </tr>
+    <tr>
+      <td>Noise Buds VS104</td>
+      <td>Noise</td>
+      <td>₹2,499</td>
+      <td>Deep bass, ENC mic, 50hr playtime</td>
+    </tr>
+  </table>
+</body>
+</html>

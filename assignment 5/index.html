@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Form Handling</title>
+    
+  <style>
+    #parent {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 20px;
+      height: 100vh;
+      font-family: Arial, sans-serif;
+    }
+
+    .form-div {
+      display: flex;
+      width: 300px;
+      flex-direction: column;
+      gap: 10px;
+      background: #f4f4f4;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 0 8px rgba(0,0,0,0.1);
+    }
+
+    label {
+      font-weight: bold;
+    }
+
+    input, select {
+      margin-bottom: 10px;
+      padding: 5px;
+      border-radius: 5px;
+      border: 1px solid #ccc;
+      width: 100%;
+    }
+
+    button {
+      padding: 10px 20px;
+      border: none;
+      border-radius: 5px;
+      background-color: royalblue;
+      color: white;
+      cursor: pointer;
+      font-size: 16px;
+    }
+
+    button:hover {
+      background-color: dodgerblue;
+    }
+    #option-div{
+      display: flex;
+      
+    }
+  </style>
+</head>
+
+<body>
+  <div id="parent">
+    <h1>FORM HANDLING</h1>
+    <form class="form-div" onsubmit="handleSubmit(event)">
+      <label>NAME :</label>
+      <input type="text" placeholder="Enter Name.." required />
+      <div id="option-div">
+      <label>GENDER :</label>
+      <label><input name="GENDER" type="radio" value="MALE" placeholder="MALE"/> Male</label>
+      <label><input name="GENDER" type="radio" value="FEMALE" placeholder="FEMALE"/> Female</label>
+</div>
+      <label>ROLL NO :</label>
+      <input type="text" placeholder="Enter Roll No.." required />
+
+      <label>EMAIL :</label>
+      <input type="email" placeholder="Enter Email.." required />
+
+      <label>DEPARTMENT :</label>
+      <input type="text" placeholder="Enter Department.." />
+
+      <label>DATE OF BIRTH :</label>
+      <input type="date" placeholder="Enter Date of Birth.." />
+
+      <label>CITY :</label>
+      <select name="CITY" required>
+        <option value="">-- Select City --</option>
+        <option>INDORE</option>
+        <option>GWALIOR</option>
+        <option>UJJAIN</option>
+        <option>JAIPUR</option>
+        <option>BHOPAL</option>
+      </select>
+
+      <button type="submit">SUBMIT!</button>
+    </form>
+  </div>
+
+  <script>
+    function handleSubmit(event) {
+      event.preventDefault(); // Prevents the form from refreshing the page
+      alert("FORM SUBMITTED TO NOWHERE!!");
+    }
+  </script>
+</body>
+</html>

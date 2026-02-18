@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8"/>
+<title>MiniCraft — Single File</title>
+<style>
+  html, body { margin:0; overflow:hidden; background:#87ceeb; }
+  #crosshair {
+    position:absolute; left:50%; top:50%; 
+    width:20px; height:20px; 
+    margin-left:-10px; margin-top:-10px;
+    pointer-events:none; color:white;
+    font-size:30px; text-align:center;
+    user-select:none;
+  }
+  #help {
+    position:absolute; top:10px; left:10px;
+    background:rgba(0,0,0,0.4); color:white; padding:8px 12px;
+    border-radius:6px; font-family:monospace;
+  }
+</style>
+</head>
+
+<body>
+<div id="crosshair">+</div>
+<div id="help">
+  W A S D = Move<br>
+  SPACE = Jump<br>
+  Left Click = Destroy Block<br>
+  Right Click = Place Block<br>
+</div>
+
+<!-- THREE.js CDN (No import required) -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+
+<script>
+/* ---------------------------------------------------------
+   BASIC THREE.JS SETUP
+--------------------------------------------------------- */
+let scene = new THREE.Scene();
+let camera = new THREE.PerspectiveCamera(75, innerWidth/innerHeight, 0.1, 1000);
+let renderer = new THREE.WebGLRenderer({ antialias:true });
+renderer.setSize(innerWidth, innerHeight);
+document.body.appendChild(renderer.domElement);
+
+/* ---------------------------------------------------------
+   PLAYER / CONTROLS
+--------------------------------------------------------- */
+let player = {
+  x: 0,
+  y: 5,
+  z: 0,
+  velY: 0,
+  onGround: false
+};
+
+let keys = {};
+document.addEventListener("keydown", e => keys[e.key] = true);
+document.addEventListener("keyup", e => keys[e.key] = false);
+
+/* ---------------------------------------------------------
+   TERRAIN + BLOCK SYSTEM
+--------------------------------------------------------- */
+let blockSize = 1;
+let blocks = [];
+
+const grassMaterial = new THREE.MeshLambertMaterial({ color: 0x55aa55 });
+const dirtMaterial  = new THREE.MeshLambertMaterial({ color: 0x8b4513 });
+const woodMaterial  = new THREE.MeshLambertMaterial({ color: 0x7B5A3A });
+
+function addBlock(x, y, z, type="grass") {
+  let mat = type === "wood" ? woodMaterial :
+            type === "dirt" ? dirtMaterial :
+            grassMaterial;
+
+  let geo = new THREE.BoxGeometry(blockSize, blockSize, blockSize);
+  let mesh = new THREE.Mesh(geo, mat);
+  mesh.position.set(x, y, z);
+  scene.add(mesh);
+
+  blocks.push({ mesh, type });
+}
+
+function generateTerrain() {
+  for (let x = -20; x < 20; x++) {
+    for (let z = -20; z < 20; z++) {
+      addBlock(x, 0, z, "grass");
+      addBlock(x, -1, z, "dirt");
+      addBlock(x, -2, z, "dirt");
+    }
+  }
+
+  // A few trees
+  for (let t=0; t<8; t++) {
+    let tx = Math.floor(Math.random()*30 - 15);
+    let tz = Math.floor(Math.random()*30 - 15);
+
+    // trunk
+    for (let i=1; i<=4; i++)
+      addBlock(tx, i, tz, "wood");
+
+    // leaves
+    for (let lx=-1; lx<=1; lx++)
+      for (let lz=-1; lz<=1; lz++)
+        addBlock(tx+lx, 5, tz+lz, "grass");
+  }
+}
+generateTerrain();
+
+/* ---------------------------------------------------------
+   RAYCAST FOR INTERACTION
+--------------------------------------------------------- */
+let raycaster = new THREE.Raycaster();
+let mouse = new THREE.Vector2(0,0);
+
+document.addEventListener("mousedown", e => {
+  raycaster.setFromCamera(mouse, camera);
+  let hits = raycaster.intersectObjects(scene.children);
+
+  if (hits.length > 0) {
+    let block = hits[0].object;
+
+    if (e.button === 0) {
+      // Left click = destroy block
+      scene.remove(block);
+      blocks = blocks.filter(b => b.mesh !== block);
+    } 
+    else if (e.button === 2) {
+      // Right click = place block near hit point
+      let p = hits[0].point;
+      let n = hits[0].face.normal;
+
+      let x = Math.round(p.x + n.x);
+      let y = Math.round(p.y + n.y);
+      let z = Math.round(p.z + n.z);
+
+      addBlock(x, y, z, "wood");
+    }
+  }
+});
+
+// Prevent context menu (for right click)
+document.addEventListener("contextmenu", e => e.preventDefault());
+
+/* ---------------------------------------------------------
+   CAMERA FOLLOW PLAYER
+--------------------------------------------------------- */
+camera.position.set(0, 5, 5);
+camera.lookAt(0,0,0);
+
+document.body.addEventListener("mousemove", e => {
+  camera.rotation.order = "YXZ";
+  camera.rotation.y -= e.movementX * 0.003;
+  camera.rotation.x -= e.movementY * 0.003;
+});
+
+/* ---------------------------------------------------------
+   LIGHTING
+--------------------------------------------------------- */
+let light = new THREE.DirectionalLight(0xffffff, 1);
+light.position.set(5,10,5);
+scene.add(light);
+
+/* ---------------------------------------------------------
+   LOOP
+--------------------------------------------------------- */
+function gameLoop() {
+  requestAnimationFrame(gameLoop);
+
+  // movement
+  let speed = 0.15;
+  let forward = new THREE.Vector3();
+  camera.getWorldDirection(forward);
+  forward.y = 0;
+  forward.normalize();
+
+  let right = new THREE.Vector3();
+  right.crossVectors(forward, new THREE.Vector3(0,1,0)).normalize();
+
+  if (keys["w"]) {
+    player.x += forward.x * speed;
+    player.z += forward.z * speed;
+  }
+  if (keys["s"]) {
+    player.x -= forward.x * speed;
+    player.z -= forward.z * speed;
+  }
+  if (keys["a"]) {
+    player.x -= right.x * speed;
+    player.z -= right.z * speed;
+  }
+  if (keys["d"]) {
+    player.x += right.x * speed;
+    player.z += right.z * speed;
+  }
+
+  // gravity
+  player.velY -= 0.01;
+  player.y += player.velY;
+
+  if (player.y < 3) {
+    player.y = 3;
+    player.velY = 0;
+    player.onGround = true;
+  }
+
+  // jump
+  if (keys[" "] && player.onGround) {
+    player.velY = 0.25;
+    player.onGround = false;
+  }
+
+  camera.position.set(player.x, player.y, player.z);
+
+  renderer.render(scene, camera);
+}
+
+gameLoop();
+</script>
+
+</body>
+</html>
