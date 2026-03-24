@@ -23,6 +23,8 @@ int main(){
   delet();
   delet();
 
+  return 0;
+
 }
 
 void insert(){
@@ -69,4 +71,6 @@ void display(){
   for( int i=front ; i<=Rear ; i++){
     printf("%d", queue[i]);
   }
+
+ 
 }
