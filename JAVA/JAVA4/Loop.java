@@ -21,15 +21,49 @@ class loop{
 
     // }
 
-    while(i<=10){
-      if(i==1){
-        System.out.println( "-----------------------");
-      }
-      System.out.println( num + " " + "*" + " " + i + " " + "=" + " "+ num * i);
-      if(i==10){
-        System.out.println( "-----------------------");
-      }
-    }
+    // while(i<=10){
+    //   if(i==1){
+    //     System.out.println( "-----------------------");
+    //   }
+    //   System.out.println( num + " " + "*" + " " + i + " " + "=" + " "+ num * i);
+    //   if(i==10){
+    //     System.out.println( "-----------------------");
+    //   }
+    // }
+
+    //   for(i=1 ; i<=10 ; i++){
+
+    //   if(i==1){
+    //     System.out.println( "-----------------------");
+    //   }
+    //   res=num*i;
+    //   System.out.println( num + "*" + i + "=" + res);
+    //   if(i==7){
+    //     Break;
+    //   }
+    //   if(i==10){
+    //     System.out.println( "-----------------------");
+    //   }
+
+    // }
+
+    //  for(i=1 ; i<=10 ; i++){
+
+    //   if(i==1){
+    //     System.out.println( "-----------------------");
+    //   }
+    //   res=num*i;
+    //   System.out.println( num + "*" + i + "=" + res);
+    //   if(i<6){
+    //     Continue;
+    //   }
+    //   if(i==10){
+    //     System.out.println( "-----------------------");
+    //   }
+
+    // }
+
+    
     
 
 
