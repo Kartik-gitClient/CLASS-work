@@ -17,7 +17,7 @@ class classDemo{
     box box1 = new box();
     Scanner input = new Scanner(System.in);
     
-    System.out.println("Enter the values of HEIGHT , WIDTH , DEPTH\n");
+    System.out.println("\nEnter the values of HEIGHT , WIDTH , DEPTH\n");
     System.out.println("HEIGHT:- \n");
     height = input.nextDouble();
     System.out.println("WIDTH:- \n");
@@ -30,7 +30,7 @@ class classDemo{
     box1.depth = depth;
 
     volume = box1.volume();
-    System.out.println("VOLUME :- " + volume);
+    System.out.println("VOLUME :- \n" + volume);
 
 
 
