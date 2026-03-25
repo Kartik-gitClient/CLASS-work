@@ -17,12 +17,12 @@ class box{
 class BoxDemo{
 
   public static void main(String[] args){
-    double vol2=1500.00;
     double height,width,depth, volume, Difference;
     box box1 = new box();
+    box box2 = new box();//BOX NO. 2
     Scanner input = new Scanner(System.in);
     
-    System.out.println("\nEnter the values of HEIGHT , WIDTH , DEPTH\n");
+    System.out.println("\nEnter the values of HEIGHT , WIDTH , DEPTH for 1ST box :-\n");
     System.out.println("HEIGHT:- \n");
     height = input.nextDouble();
     System.out.println("WIDTH:- \n");
@@ -34,12 +34,28 @@ class BoxDemo{
     box1.width = width;
     box1.depth = depth;
 
+    System.out.println("\nEnter the values of HEIGHT , WIDTH , DEPTH for 2ND box :-\n");
+    System.out.println("HEIGHT:- \n");
+    height = input.nextDouble();
+    System.out.println("WIDTH:- \n");
+    width = input.nextDouble();
+    System.out.println("DEPTH:- \n");
+    depth = input.nextDouble();
+
+    box2.height = height;
+    box2.width = width;
+    box2.depth = depth;
+
     //CALCULATING VOLUME WITH THE BOX's VOLUME Fn.
     volume = box1.volume();
-    System.out.println("VOLUME :- \n" + volume);
+    System.out.println("VOLUME OF 1ST BOX :- \n" + volume);
+
 
     //REDUCING THE VALUE BY A SMALLER VOLUME vol2 = 800.00;
-    Difference= box1.volDiff(vol2);//VOL2 GIVEN AS ARGUMENT
+    volume = box2.volume();
+    System.out.println("VOLUME OF 2nd BOX :- \n" + volume);
+
+    Difference= box1.volDiff(volume);//VOL2 GIVEN AS ARGUMENT
     System.out.println("Difference of volume :- " + Difference);
 
     
